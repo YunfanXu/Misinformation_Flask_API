@@ -1,6 +1,5 @@
 from keras import models
 from keras.applications.xception import preprocess_input
-from flask import Flask
 from flask_restful import Resource, Api, reqparse
 from werkzeug.datastructures import FileStorage
 import tempfile
@@ -9,12 +8,24 @@ import pprint
 import cv2
 import dlib
 import os
-import numpy as np
 import matplotlib.pyplot as plt
+from flask import Flask, render_template, request, jsonify
+from PIL import Image
+import os
+import io
+import sys
+import numpy as np
+import base64
+import werkzeug
+import time
+
+
 face_detector = dlib.get_frontal_face_detector()
 
 
 app = Flask(__name__)
+
+
 app.logger.setLevel('INFO')
 
 api = Api(app)
@@ -114,10 +125,11 @@ def evaluate(cropped_face):
 def test_for_video(video_path):
     dirname = os.path.dirname(__file__)
     file_name = video_path.split("/")[-1]
-    output_ = os.path.join(dirname, "test_video_results",file_name)
-    
+    output_ = os.path.join(dirname, "test_video_results", file_name)
+
     capture = cv2.VideoCapture(video_path)
-    fps = capture.get(cv2.CAP_PROP_FPS)      # OpenCV2 version 2 used "CV_CAP_PROP_FPS"
+    # OpenCV2 version 2 used "CV_CAP_PROP_FPS"
+    fps = capture.get(cv2.CAP_PROP_FPS)
     frame_count = int(capture.get(cv2.CAP_PROP_FRAME_COUNT))
     duration = frame_count/fps
     print('fps = ' + str(fps))
@@ -184,12 +196,29 @@ class Video(Resource):
         ofile, ofname = tempfile.mkstemp()
         the_file.save(ofname)
         output_path = test_for_video(ofname)
-        output = {"videoId": output_path }
+        output = {"videoId": output_path}
+        return output
+
+
+class QueryImage(Resource):
+
+    def post(self):
+        img_data = request.form.get('image')
+        imgdata = base64.b64decode(img_data)
+        folder_name = "queried_images"
+        timestr = time.strftime("%Y%m%d-%H%M%S.jpg")
+        filename = os.path.join(folder_name, timestr)
+        with open(filename, 'wb') as f:
+            f.write(imgdata)
+
+        output, label = test_for_image(filename)
+        output = {"label": label, "score": output}
         return output
 
 
 api.add_resource(Image, '/testImage')
 api.add_resource(Video, '/testVideo')
+api.add_resource(QueryImage, '/queryImage')
 
 if __name__ == '__main__':
     app.run(debug=True)
