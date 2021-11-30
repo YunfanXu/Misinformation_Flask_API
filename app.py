@@ -216,9 +216,26 @@ class QueryImage(Resource):
         return output
 
 
+class QueryVideo(Resource):
+
+    def post(self):
+        img_data = request.form.get('video')
+        imgdata = base64.b64decode(img_data)
+        folder_name = "queried_videos"
+        timestr = time.strftime("%Y%m%d-%H%M%S.mp4")
+        filename = os.path.join(folder_name, timestr)
+        with open(filename, 'wb') as f:
+            f.write(imgdata)
+
+        output_path = test_for_video(filename)
+        output = {"videoId": output_path}
+        return output
+
+
 api.add_resource(Image, '/testImage')
 api.add_resource(Video, '/testVideo')
 api.add_resource(QueryImage, '/queryImage')
+api.add_resource(QueryVideo, '/queryVideo')
 
 if __name__ == '__main__':
     app.run(debug=True)
