@@ -68,4 +68,4 @@ videoId:20211229-152806.mp4
 ```
 
 ### Tested video example
-![demo](./assets/demo/example.mp4)
+![demo](./assets/demo/example.gif)
