@@ -172,7 +172,7 @@ def test_for_image(image_path):
     cropped_face = image[y:y+size, x:x+size]  # cropping the face
     # Sending the cropped face to get classifier result
     output, label = evaluate(cropped_face)
-    print("The accurate of this image is ", label, " and the value is", output)
+    print("This image could be ", label, " and the possibility is", output)
     return output, label
 
 
@@ -229,6 +229,7 @@ class QueryVideo(Resource):
 
         output_path = test_for_video(filename)
         output = {"videoId": output_path}
+        print("videoId:" + output_path)
         return output
 
 
