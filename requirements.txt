@@ -3,7 +3,7 @@
 
 Flask==2.2.5
 Flask-RESTful==0.3.10
-Werkzeug==2.3.6
+Werkzeug==2.2.3
 # Packages
 keras==2.13.1rc0
 opencv-python==4.7.0.72
