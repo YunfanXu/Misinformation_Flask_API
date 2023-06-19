@@ -1,9 +1,9 @@
 #requirements.txt
 
 
-Flask==1.0.2
-werkzeug==0.16.0
-
+Flask==2.3.2
+Flask-RESTful==0.3.10
+Werkzeug==2.3.6
 # Packages
 keras==2.13.1rc0
 opencv-python==4.7.0.72

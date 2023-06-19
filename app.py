@@ -1,20 +1,18 @@
-import os
-import numpy as np
-import base64
-import time
-import cv2
-import dlib
-import tempfile
-
 from keras import models
 from keras.applications.xception import preprocess_input
 from flask_restful import Resource, Api, reqparse
 from werkzeug.datastructures import FileStorage
+import tempfile
 
-
-import matplotlib.pyplot as plt
+import cv2
+import dlib
+import os
 from flask import Flask, render_template, request, jsonify
 from PIL import Image
+import os
+import numpy as np
+import base64
+import time
 
 
 
