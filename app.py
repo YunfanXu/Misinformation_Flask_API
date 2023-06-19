@@ -239,4 +239,5 @@ api.add_resource(QueryImage, '/queryImage')
 api.add_resource(QueryVideo, '/queryVideo')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=9000)
+
