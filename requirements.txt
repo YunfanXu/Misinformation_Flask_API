@@ -10,10 +10,4 @@ opencv-python==4.7.0.72
 dlib==19.24.2
 matplotlib==3.7.1
 Pillow==9.5.0
-tensorboard==2.13.0
-tensorboard-data-server==0.7.1
-tensorflow==2.13.0rc1
-tensorflow-estimator==2.13.0rc0
-tensorflow-macos==2.13.0rc1
-termcolor==2.3.0
-tf==1.0.0
+tensorflow==2.11.1
